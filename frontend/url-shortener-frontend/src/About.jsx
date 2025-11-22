@@ -30,7 +30,7 @@ function About(){
                     <li>React.js for a responsive and interactive user interface.</li>
                     <li>React Router for seamless navigation.</li>  
                     <li>Axios for API requests to the backend.</li>
-                    <li>CSS / Tailwind for styling.</li>
+                    <li>CSS for styling.</li>
                 </ul>
                 <h5>Utilities & Tools:</h5>
                 <ul>
