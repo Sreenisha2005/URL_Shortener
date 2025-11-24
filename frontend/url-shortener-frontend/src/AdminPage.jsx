@@ -11,6 +11,8 @@ function AdminPage() {
 
     const navigate = useNavigate();
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     const fetchLinks = async (pageNumber = 1, size = pageSize) => {
         const token = localStorage.getItem("token");
 
@@ -21,7 +23,7 @@ function AdminPage() {
 
         try {
             const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/auth/admin/links`,
+                `${API_URL}/auth/admin/links`,
                 {
                     params: { page: pageNumber - 1, size },
                     headers: { Authorization: `Bearer ${token}` }

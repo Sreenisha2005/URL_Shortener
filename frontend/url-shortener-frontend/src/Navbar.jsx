@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const handleAdminClick = async () => {
     const token = localStorage.getItem("token");
 
@@ -12,7 +12,7 @@ function Navbar() {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/validate`, {
+      const res = await fetch(`${API_URL}/auth/validate`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`

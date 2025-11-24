@@ -7,7 +7,7 @@ function UrlShortener(){
     const[shortUrl, setShortUrl] = useState('');
     const[error, setError] = useState('');
     const[loading, setLoading] = useState(false);
-
+    const API_URL = import.meta.env.VITE_API_URL;
     const handleShorten = async () => {
         if(!longUrl.trim()){
             setError('Please enter a valid URL');
@@ -19,8 +19,8 @@ function UrlShortener(){
         setShortUrl('');
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/url`, { longurl: longUrl });
-            setShortUrl(`${import.meta.env.VITE_API_URL}/` + response.data.shortcode);
+            const response = await axios.post(`${API_URL}/url`, { longurl: longUrl });
+            setShortUrl(`${API_URL}/` + response.data.shortcode);
         }
         catch(err){
             setError('Failed to shorten URL. Please try again.');
