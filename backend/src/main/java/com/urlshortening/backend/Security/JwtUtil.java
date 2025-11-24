@@ -4,20 +4,22 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
 
-
+@Component
 public class JwtUtil {
-    private final static String SECRET = "YqLVYdpZMpBWRuFSNrbHUGK7zeaFI1ttKmYxOBAvfPU=";
-    private final static SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
+    @Value("${jwt.secret}")
+    private String SECRET;
+    private final SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
 
-    private final static long EXPIRATION_TIME = 1000 * 60 * 60 * 5; // 5 hours
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 5; // 5 hours
 
-    public static String generateToken(Map<String, Object> claims, String username) {
+    public String generateToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(username)
@@ -27,7 +29,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(key)
                 .build()
@@ -35,11 +37,11 @@ public class JwtUtil {
                 .getPayload();
     }
 
-    public static String extractUsername(String token) {
+    public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
     }
 
-    public static String extractRole(String token) {
+    public String extractRole(String token) {
         return extractAllClaims(token).get("role", String.class);
     }
 }
