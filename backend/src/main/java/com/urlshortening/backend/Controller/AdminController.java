@@ -35,4 +35,10 @@ public class AdminController {
     public ResponseEntity<Page<UrlMapping>> urlListPage(Pageable pageable){
         return ResponseEntity.ok(adminService.urlPage(pageable));
     }
+
+    @GetMapping("/validate")
+    public ResponseEntity<String> validateAdminToken() {
+        return ResponseEntity.ok("valid");
+    }
+
 }

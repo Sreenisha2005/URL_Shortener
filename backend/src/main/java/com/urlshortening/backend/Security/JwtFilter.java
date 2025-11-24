@@ -21,11 +21,14 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
     private final JwtUtil jwtUtil;
     private final AdminRepository adminRepo;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
             throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
@@ -34,29 +37,35 @@ public class JwtFilter extends OncePerRequestFilter {
 
             String token = header.substring(7);
 
-            try {
-                String username = jwtUtil.extractUsername(token);
-//                String role = JwtUtil.extractRole(token);
+            if (jwtUtil.validateToken(token)) {
+                try {
+                    String username = jwtUtil.extractUsername(token);
+                    String role = jwtUtil.extractRole(token);
 
-                Admins admin = adminRepo.findByUsername(username).orElse(null);
+                    Admins admin = adminRepo.findByUsername(username).orElse(null);
 
-                if (admin != null) {
 
-                    UsernamePasswordAuthenticationToken auth =
-                            new UsernamePasswordAuthenticationToken(
-                                    username,
-                                    null,
-                                    List.of(new SimpleGrantedAuthority("ADMIN")) // IMPORTANT
-                            );
+                    if (admin != null && "ADMIN".equals(role)) {
 
-                    SecurityContextHolder.getContext().setAuthentication(auth);
+                        UsernamePasswordAuthenticationToken auth =
+                                new UsernamePasswordAuthenticationToken(
+                                        username,
+                                        null,
+                                        List.of(new SimpleGrantedAuthority("ADMIN"))
+                                );
+
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("JWT Error: " + e.getMessage());
                 }
-
-            } catch (Exception e) {
-                System.out.println("JWT Error: " + e.getMessage());
+            } else {
+                System.out.println("Invalid or expired JWT!");
             }
         }
 
         filterChain.doFilter(request, response);
     }
 }
+

@@ -10,9 +10,10 @@ function AdminPage() {
     const [pageSize, setPageSize] = useState(10);
 
     const navigate = useNavigate();
-    const token = localStorage.getItem('token');
 
     const fetchLinks = async (pageNumber = 1, size = pageSize) => {
+        const token = localStorage.getItem("token");
+
         if (!token) {
             navigate('/admin/login');
             return;
@@ -43,10 +44,13 @@ function AdminPage() {
     };
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
         if (!token) {
             navigate("/admin/login");
             return;
         }
+
         fetchLinks(1, pageSize);
     }, [pageSize]);
 
