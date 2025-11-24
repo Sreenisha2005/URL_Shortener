@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-
+    private final JwtUtil jwtUtil;
     private final AdminRepository adminRepo;
 
     @Override
@@ -35,7 +35,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String token = header.substring(7);
 
             try {
-                String username = JwtUtil.extractUsername(token);
+                String username = jwtUtil.extractUsername(token);
 //                String role = JwtUtil.extractRole(token);
 
                 Admins admin = adminRepo.findByUsername(username).orElse(null);

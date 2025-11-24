@@ -18,6 +18,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AdminService {
+    private final JwtUtil jwtUtil;
     private final UrlMapRepository urlRepo;
     private final AdminRepository adminRepo;
     private final PasswordEncoder encoder;
@@ -33,7 +34,7 @@ public class AdminService {
             claims.put("role", admin.getRole());
             boolean pwdMatches = encoder.matches(loginRequest.getPassword(), admin.getPassword());
             if (pwdMatches){
-                return JwtUtil.generateToken(claims, admin.getUsername());
+                return jwtUtil.generateToken(claims, admin.getUsername());
             }
         }
         return null;
