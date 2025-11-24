@@ -31,4 +31,4 @@ This project demonstrates backend and frontend integration, secure authenticatio
 - IntelliJ IDEA / VS Code
 - Git / GitHub for version control
 
-Repository Link : https://github.com/Sreenisha2005/URL_Shortener
+Link to the application : https://urlshorten25.netlify.app/
