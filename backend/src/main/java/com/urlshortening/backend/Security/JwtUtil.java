@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,12 @@ import java.util.Map;
 public class JwtUtil {
     @Value("${jwt.secret}")
     private String SECRET;
-    private final SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
+    private SecretKey key;
+
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
+    }
 
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 5; // 5 hours
 
