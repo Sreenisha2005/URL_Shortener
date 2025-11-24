@@ -8,6 +8,7 @@ function Navbar() {
   const handleAdminClick = () => {
     if(localStorage.getItem('token')){
         navigate('/admin');
+        console.log("API URL:", import.meta.env.VITE_API_URL);
     }else{
         navigate('/admin/login');
     }

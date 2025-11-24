@@ -20,7 +20,7 @@ function AdminPage() {
 
         try {
             const response = await axios.get(
-                `http://localhost:8080/auth/admin/links`,
+                `${import.meta.env.VITE_API_URL}/auth/admin/links`,
                 {
                     params: { page: pageNumber - 1, size },
                     headers: { Authorization: `Bearer ${token}` }
