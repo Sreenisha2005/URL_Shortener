@@ -20,7 +20,7 @@ This project demonstrates backend and frontend integration, secure authenticatio
 - React.js
 - Axios
 - React Router
-- CSS / Tailwind for styling
+- CSS for styling
 
 **Utilities & Tools:**
 - Base62 Encoding for shortcodes
@@ -30,3 +30,5 @@ This project demonstrates backend and frontend integration, secure authenticatio
 **Development Tools:**
 - IntelliJ IDEA / VS Code
 - Git / GitHub for version control
+
+Repository Link : https://github.com/Sreenisha2005/URL_Shortener
