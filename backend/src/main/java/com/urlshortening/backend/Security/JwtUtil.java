@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 
@@ -23,14 +25,14 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
     }
 
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 5; // 5 hours
-
     public String generateToken(Map<String, Object> claims, String username) {
+        Instant now = Instant.now();
+
         return Jwts.builder()
                 .claims(claims)
                 .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(now.plus(5, ChronoUnit.HOURS)))
                 .signWith(key, Jwts.SIG.HS256)
                 .compact();
     }
