@@ -1,1 +1,1 @@
-Project URL : https://urlshorten25.netlify.app/
+https://urlshorten25.netlify.app/
