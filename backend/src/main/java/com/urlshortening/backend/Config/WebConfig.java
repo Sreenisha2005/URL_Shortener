@@ -19,7 +19,7 @@ public class WebConfig {
                          .allowedOriginPatterns("*")
                          .allowedMethods("POST", "GET", "PUT", "DELETE")
                          .allowedHeaders("*")
-                         .allowCredentials(true);
+                         .allowCredentials(false);
              }
          };
     }
